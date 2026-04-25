@@ -5,7 +5,7 @@ async function main() {
   try {
     const llm = new ChatGoogleGenerativeAI({
       model: "gemini-1.5-flash-latest",
-      apiKey: "AIzaSyBTRxhlqEEZwZE2laRIwqwPFR1ttSSymlU",
+      apiKey: "[GCP_API_KEY]",
       temperature: 0.3,
       maxOutputTokens: 1024,
     });

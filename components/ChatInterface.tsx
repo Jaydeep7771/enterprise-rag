@@ -106,9 +106,9 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full" id="chat-interface">
+    <div className="flex flex-col h-full bg-transparent" id="chat-interface">
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-1" id="messages-container">
+      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4" id="messages-container">
         {messages.map((msg) => (
           <div key={msg.id} className="animate-fade-in">
             {/* Role label */}
@@ -118,10 +118,10 @@ export default function ChatInterface() {
               }`}
             >
               <span
-                className={`text-[11px] font-semibold uppercase tracking-widest ${
+                className={`text-[10px] font-mono uppercase tracking-widest ${
                   msg.role === "user"
-                    ? "text-violet-400"
-                    : "text-emerald-400"
+                    ? "text-onyx-400"
+                    : "text-champagne drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]"
                 }`}
               >
                 {msg.role === "user" ? "You" : "Assistant"}
@@ -135,10 +135,10 @@ export default function ChatInterface() {
               }`}
             >
               <div
-                className={`max-w-[85%] rounded-2xl px-5 py-3.5 text-sm leading-relaxed ${
+                className={`max-w-[85%] rounded-2xl px-5 py-4 text-[13px] leading-relaxed shadow-sm ${
                   msg.role === "user"
-                    ? "bg-gradient-to-br from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-500/20"
-                    : "bg-white/[0.04] border border-white/[0.06] text-slate-200 shadow-lg shadow-black/10"
+                    ? "bg-onyx-700/80 border border-onyx-600/50 text-onyx-100"
+                    : "bg-onyx-800/40 border border-onyx-700/50 text-onyx-200"
                 }`}
                 dangerouslySetInnerHTML={{
                   __html: formatContent(msg.content),
@@ -148,14 +148,14 @@ export default function ChatInterface() {
 
             {/* Sources */}
             {msg.sources && msg.sources.length > 0 && (
-              <div className="mt-2 ml-1 flex flex-wrap gap-2">
+              <div className="mt-2.5 ml-1 flex flex-wrap gap-2">
                 {msg.sources.map((source, idx) => (
                   <div
                     key={source.id || idx}
-                    className="group relative flex items-center gap-1.5 rounded-lg bg-white/[0.03] border border-white/[0.06] px-3 py-1.5 text-[11px] text-slate-400 hover:bg-white/[0.06] hover:border-violet-500/30 transition-all cursor-default"
+                    className="group relative flex items-center gap-1.5 rounded-full bg-onyx-800/60 border border-onyx-700 px-3 py-1.5 text-[10px] font-mono text-onyx-400 hover:bg-onyx-800 hover:border-onyx-500 hover:text-onyx-200 transition-all cursor-default shadow-sm"
                   >
                     <svg
-                      className="w-3 h-3 text-violet-400"
+                      className="w-3 h-3 text-champagne/70 group-hover:text-champagne transition-colors"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -167,18 +167,18 @@ export default function ChatInterface() {
                         d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                       />
                     </svg>
-                    <span className="font-medium">
+                    <span className="tracking-wide">
                       {source.metadata.filename}
                     </span>
                     {source.similarity && (
-                      <span className="text-emerald-400/70 ml-1">
-                        {Math.round(source.similarity * 100)}%
+                      <span className="text-onyx-500 ml-1">
+                        [{Math.round(source.similarity * 100)}%]
                       </span>
                     )}
 
                     {/* Hover tooltip */}
-                    <div className="absolute bottom-full left-0 mb-2 w-72 rounded-xl bg-slate-900 border border-white/10 p-3 text-xs text-slate-300 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity shadow-xl z-50">
-                      <p className="line-clamp-4">{source.content}</p>
+                    <div className="absolute bottom-full left-0 mb-2 w-72 rounded-xl bg-onyx-800 border border-onyx-600 p-3 text-[11px] text-onyx-300 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity shadow-xl z-50">
+                      <p className="line-clamp-4 leading-relaxed font-sans">{source.content}</p>
                     </div>
                   </div>
                 ))}
@@ -190,15 +190,15 @@ export default function ChatInterface() {
         {/* Loading indicator */}
         {isLoading && (
           <div className="flex justify-start animate-fade-in">
-            <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl px-5 py-4 shadow-lg">
-              <div className="flex items-center gap-2">
+            <div className="bg-onyx-800/40 border border-onyx-700/50 rounded-2xl px-5 py-4 shadow-sm">
+              <div className="flex items-center gap-3">
                 <div className="flex gap-1">
-                  <span className="w-2 h-2 rounded-full bg-violet-400 animate-bounce [animation-delay:0ms]" />
-                  <span className="w-2 h-2 rounded-full bg-violet-400 animate-bounce [animation-delay:150ms]" />
-                  <span className="w-2 h-2 rounded-full bg-violet-400 animate-bounce [animation-delay:300ms]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-champagne animate-bounce [animation-delay:0ms]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-champagne animate-bounce [animation-delay:150ms]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-champagne animate-bounce [animation-delay:300ms]" />
                 </div>
-                <span className="text-xs text-slate-500 ml-2">
-                  Searching documents & generating response...
+                <span className="text-[11px] font-mono uppercase tracking-widest text-onyx-500">
+                  Synthesizing
                 </span>
               </div>
             </div>
@@ -209,12 +209,13 @@ export default function ChatInterface() {
       </div>
 
       {/* Input Area */}
-      <div className="border-t border-white/[0.06] bg-white/[0.02] px-4 py-4" id="chat-input-area">
+      <div className="px-6 py-4 pb-6" id="chat-input-area">
         <form
           onSubmit={handleSubmit}
           className="flex items-end gap-3 max-w-4xl mx-auto"
         >
-          <div className="relative flex-1">
+          <div className="relative flex-1 group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-onyx-700 to-onyx-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500" />
             <textarea
               ref={textareaRef}
               id="chat-input"
@@ -224,21 +225,21 @@ export default function ChatInterface() {
               placeholder="Ask a question about your documents..."
               rows={1}
               disabled={isLoading}
-              className="w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3 pr-12 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/40 focus:border-violet-500/40 transition-all disabled:opacity-50"
+              className="relative w-full resize-none rounded-2xl border border-onyx-600 bg-onyx-800/90 px-5 py-3.5 pr-12 text-[13px] text-onyx-100 placeholder-onyx-500 focus:outline-none focus:ring-1 focus:ring-champagne/50 focus:border-champagne/50 transition-all disabled:opacity-50 shadow-inner"
             />
           </div>
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
             id="send-button"
-            className="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:scale-105 active:scale-95 transition-all disabled:opacity-40 disabled:hover:scale-100 disabled:hover:shadow-violet-500/25"
+            className="flex items-center justify-center w-12 h-12 rounded-2xl bg-onyx-700 border border-onyx-600 text-onyx-200 shadow-md hover:bg-onyx-600 hover:text-champagne active:scale-95 transition-all disabled:opacity-40 disabled:hover:bg-onyx-700 disabled:hover:text-onyx-200 disabled:active:scale-100"
           >
             <svg
               className="w-5 h-5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              strokeWidth={2}
+              strokeWidth={1.5}
             >
               <path
                 strokeLinecap="round"
@@ -248,16 +249,8 @@ export default function ChatInterface() {
             </svg>
           </button>
         </form>
-        <p className="text-center text-[10px] text-slate-600 mt-2">
-          RAG-powered answers grounded in your uploaded documents · Press{" "}
-          <kbd className="px-1.5 py-0.5 rounded bg-white/[0.06] border border-white/[0.08] text-slate-400 text-[10px]">
-            Enter
-          </kbd>{" "}
-          to send,{" "}
-          <kbd className="px-1.5 py-0.5 rounded bg-white/[0.06] border border-white/[0.08] text-slate-400 text-[10px]">
-            Shift+Enter
-          </kbd>{" "}
-          for new line
+        <p className="text-center text-[10px] text-onyx-500 mt-3 font-mono tracking-wide">
+          RAG-POWERED · <kbd className="px-1.5 py-0.5 rounded bg-onyx-800 border border-onyx-700 text-onyx-400">ENTER</kbd> TO SEND
         </p>
       </div>
     </div>
